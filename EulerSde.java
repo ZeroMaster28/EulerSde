@@ -15,13 +15,12 @@ public class EulerSde{
 
     static double T=1.0d;     //interval
     static int N=10000;       //steps
-    static double h=T/N;      //single step
     static boolean isWindows; //OS flag
 
     /** Sde parameters*/
-    static final double x0=0.0d;
-    static final SdeFunction a=(s,t)->s*t;
-    static final SdeFunction b=(s,t)->s-t;
+    static final double x0=1.0d;
+    static final SdeFunction a=(s,t)->0;
+    static final SdeFunction b=(s,t)->t*t;
 
     public static void main(String []args){
 
@@ -39,6 +38,7 @@ public class EulerSde{
                 N=Integer.parseInt(args[1]);
             }
         }
+  	double h=T/N;//single step
         double x=x0;
         Random rand=new Random();
         try{
