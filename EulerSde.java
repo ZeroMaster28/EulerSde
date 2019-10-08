@@ -2,7 +2,6 @@ import java.util.Random;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
-
 /** @author ZeroMaster28
  * Class represents approximate solution of SDE
  * of the form dX=a(t,X)dt+b(t,X)dW
@@ -19,8 +18,8 @@ public class EulerSde{
 
     /** Sde parameters*/
     static final double x0=1.0d;
-    static final SdeFunction a=(s,t)->0;
-    static final SdeFunction b=(s,t)->t*t;
+    static final SdeFunction a=Functions.getDrift();
+    static final SdeFunction b=Functions.getDiffusion();
 
     public static void main(String []args){
 
@@ -38,8 +37,15 @@ public class EulerSde{
                 N=Integer.parseInt(args[1]);
             }
         }
+	
   	double h=T/N;//single step
         double x=x0;
+
+	System.out.println("Approximating dXt = a(t,Xt)dt + b(t,Xt)dWt ");
+	System.out.println(Functions.getDriftForm());
+	System.out.println(Functions.getDiffForm());
+	System.out.printf("X0=%f\n\n",x);
+
         Random rand=new Random();
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt"));
@@ -81,12 +87,4 @@ public class EulerSde{
 
         }
     }
-    /**
-    @FunctionalInterface for sde functions like a(t,xt)
-    */
-    private interface SdeFunction
-    {
-        double map(double t,double x);
-    }
-
 }
